@@ -3,16 +3,16 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ className = '' }: SkeletonProps) {
-  return <div className={`skeleton rounded-lg ${className}`} />;
+  return <div className={`skeleton rounded-lg ${className}`}/>;
 }
 
 export function ImageCardSkeleton() {
   return (
-    <div className="rounded-xl overflow-hidden border border-gray-100">
-      <Skeleton className="w-full h-56" />
+    <div className="rounded-xl overflow-hidden border border-[#0D2040] bg-[#040E1E]">
+      <Skeleton className="w-full h-56"/>
       <div className="p-4 space-y-2">
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-3 w-1/3" />
+        <Skeleton className="h-4 w-3/4"/>
+        <Skeleton className="h-3 w-1/3"/>
       </div>
     </div>
   );
@@ -20,10 +20,10 @@ export function ImageCardSkeleton() {
 
 export function OrderRowSkeleton() {
   return (
-    <tr className="border-b border-gray-100">
+    <tr className="border-b border-[#0D2040]">
       {[1, 2, 3, 4, 5].map((i) => (
         <td key={i} className="px-4 py-3">
-          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full"/>
         </td>
       ))}
     </tr>

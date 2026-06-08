@@ -3,53 +3,72 @@ import { MessageCircle } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#111827] text-gray-400">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+    <footer
+      className="relative overflow-hidden"
+      style={{
+        background: 'var(--bg-section)',
+        borderTop: '1px solid var(--border-section)',
+      }}
+    >
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--accent-subtle) 0%, transparent 50%)' }}/>
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+
           {/* Brand */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-[#1D9E75] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">C</span>
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center border"
+                style={{ background: 'var(--accent-subtle)', borderColor: 'var(--border)' }}>
+                <span className="font-bold" style={{ color: 'var(--accent)' }}>C</span>
               </div>
               <div className="leading-tight">
-                <span className="text-white font-semibold block">Curator</span>
-                <span className="text-[#1D9E75] text-sm">Creative Studio</span>
+                <span className="font-semibold block tracking-wide" style={{ color: 'var(--text-1)' }}>Curator</span>
+                <span className="text-xs font-medium tracking-widest uppercase"
+                  style={{ color: 'var(--text-3)', fontSize: '9px' }}>Creative Studio</span>
               </div>
             </div>
-            <p className="text-sm leading-relaxed max-w-xs">
-              Premium photography, custom frames, shirt printing & personalized gifts — crafted
-              for every occasion in Ghana.
+
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: 'var(--text-3)' }}>
+              Premium photography, custom frames, shirt printing &amp; personalized gifts —
+              crafted for every occasion in Ghana.
             </p>
-            <div className="flex items-center gap-3 pt-1">
-              <a
-                href="https://wa.me/233553767177"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-[#1D9E75] hover:text-[#25D366] transition-colors"
-              >
-                <MessageCircle size={16} />
-                +233 55 376 7177
-              </a>
-            </div>
+
+            <a
+              href="https://wa.me/233553767177"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm transition-colors duration-200"
+              style={{ color: 'var(--text-3)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-3)')}
+            >
+              <MessageCircle size={15}/>
+              +233 55 376 7177
+            </a>
           </div>
 
           {/* Navigation */}
           <div className="space-y-4">
-            <h4 className="text-white text-sm font-semibold uppercase tracking-wider">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: 'var(--text-1)' }}>
               Navigation
             </h4>
             <ul className="space-y-2.5">
               {[
-                { to: '/', label: 'Home' },
+                { to: '/',        label: 'Home' },
                 { to: '/gallery', label: 'Portfolio' },
-                { to: '/order', label: 'Place an Order' },
+                { to: '/order',   label: 'Place an Order' },
                 { to: '/contact', label: 'Contact Us' },
               ].map(({ to, label }) => (
                 <li key={to}>
                   <Link
                     to={to}
-                    className="text-sm hover:text-[#1D9E75] transition-colors duration-200"
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: 'var(--text-3)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-3)')}
                   >
                     {label}
                   </Link>
@@ -60,7 +79,8 @@ export function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="text-white text-sm font-semibold uppercase tracking-wider">Services</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: 'var(--text-1)' }}>Services</h4>
             <ul className="space-y-2.5">
               {[
                 'Photoshoot Booking',
@@ -71,7 +91,10 @@ export function Footer() {
                 <li key={s}>
                   <Link
                     to="/order"
-                    className="text-sm hover:text-[#1D9E75] transition-colors duration-200"
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: 'var(--text-3)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-3)')}
                   >
                     {s}
                   </Link>
@@ -81,25 +104,55 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs">© 2025 Curator Creative Studio. All rights reserved.</p>
-          <div className="flex items-center gap-1">
-            {[
-              { href: 'https://instagram.com', label: 'IG' },
-              { href: 'https://facebook.com', label: 'FB' },
-              { href: 'https://tiktok.com', label: 'TK' },
-            ].map(({ href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-800 hover:text-[#1D9E75] transition-colors text-xs font-bold"
-              >
-                {label}
-              </a>
-            ))}
+        {/* Bottom bar */}
+        <div className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          style={{ borderTop: '1px solid var(--border-section)' }}>
+          <p className="text-xs" style={{ color: 'var(--text-4)' }}>
+            © 2025 Curator Creative Studio. All rights reserved.
+          </p>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
+              {[
+                { href: 'https://instagram.com', label: 'IG' },
+                { href: 'https://facebook.com',  label: 'FB' },
+                { href: 'https://tiktok.com',    label: 'TK' },
+              ].map(({ href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center
+                    border text-xs font-bold transition-all duration-200"
+                  style={{ color: 'var(--text-3)', borderColor: 'transparent' }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = 'var(--text-1)';
+                    (e.currentTarget as HTMLElement).style.background = 'var(--accent-subtle)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.color = 'var(--text-3)';
+                    (e.currentTarget as HTMLElement).style.background = 'transparent';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'transparent';
+                  }}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+
+            {/* Admin link — subtle, for studio owners */}
+            <Link
+              to="/admin/login"
+              className="text-xs transition-colors duration-200 px-2 py-1"
+              style={{ color: 'var(--text-4)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-3)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-4)')}
+            >
+              Admin
+            </Link>
           </div>
         </div>
       </div>
