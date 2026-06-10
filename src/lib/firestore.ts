@@ -8,12 +8,13 @@ import {
   orderBy,
   where,
   onSnapshot,
+  setDoc,
   serverTimestamp,
   Timestamp,
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import type { Order, OrderStatus, PortfolioImage, Comment, PortfolioCategory } from '../types';
+import type { Order, OrderStatus, PortfolioImage, Comment, PortfolioCategory, PricingConfig } from '../types';
 
 // ── Portfolio ──────────────────────────────────────────────────────────────
 
@@ -120,6 +121,20 @@ export async function addOrder(data: Omit<Order, 'id' | 'createdAt' | 'status'>)
 
 export async function updateOrderStatus(id: string, status: OrderStatus): Promise<void> {
   await updateDoc(doc(db, 'orders', id), { status });
+}
+
+// ── Pricing ────────────────────────────────────────────────────────────────
+
+const PRICING_DOC = doc(db, 'settings', 'pricing');
+
+export function subscribeToPricing(onData: (pricing: PricingConfig | null) => void): Unsubscribe {
+  return onSnapshot(PRICING_DOC, (snap) => {
+    onData(snap.exists() ? (snap.data() as PricingConfig) : null);
+  });
+}
+
+export async function savePricing(pricing: PricingConfig): Promise<void> {
+  await setDoc(PRICING_DOC, pricing);
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────

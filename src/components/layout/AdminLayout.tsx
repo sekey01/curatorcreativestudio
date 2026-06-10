@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShoppingBag, ImageIcon, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, ImageIcon, Tag, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -8,6 +8,7 @@ const navItems = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/admin/orders', label: 'Orders', icon: ShoppingBag },
   { to: '/admin/gallery', label: 'Gallery', icon: ImageIcon },
+  { to: '/admin/pricing', label: 'Pricing', icon: Tag },
 ];
 
 export function AdminLayout({ children }: { children: ReactNode }) {

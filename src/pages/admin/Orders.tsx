@@ -92,6 +92,7 @@ export function AdminOrders() {
                   <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Customer</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Phone</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Type</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Estimate</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Status</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wide">Actions</th>
                 </tr>
@@ -101,7 +102,7 @@ export function AdminOrders() {
                   Array.from({ length: 5 }).map((_, i) => <OrderRowSkeleton key={i} />)
                 ) : filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-16 text-center text-[#6B7280] text-sm">
+                    <td colSpan={7} className="px-4 py-16 text-center text-[#6B7280] text-sm">
                       {orders.length === 0 ? 'No orders yet.' : 'No orders match your filters.'}
                     </td>
                   </tr>

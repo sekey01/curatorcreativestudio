@@ -41,7 +41,10 @@ export interface BaseOrder {
   status: OrderStatus;
   createdAt: Timestamp;
   additionalNotes?: string;
+  estimatedPrice?: number;
 }
+
+export type OccasionType = 'Birthday' | 'Wedding' | 'Party' | 'Funeral' | 'Ceremony' | 'Other';
 
 export interface PhotoshootOrder extends BaseOrder {
   orderType: 'photoshoot';
@@ -120,4 +123,21 @@ export type Order = PhotoshootOrder | FrameOrder | ShirtOrder | GiftOrder;
 export interface AdminUser {
   uid: string;
   email: string | null;
+}
+
+// ── Pricing ────────────────────────────────────────────────────────────────
+
+export interface PricingConfig {
+  frames: Record<FrameType, Record<FrameSize, number>>;
+  frameAddons: {
+    edgeTypes: Record<EdgeType, number>;
+    lamination: Record<LaminationType, number>;
+    expressDeliveryFee: number;
+  };
+  shirts: {
+    items: Record<ShirtItemType, number>;
+    printMethods: Record<PrintMethod, number>;
+  };
+  gifts: Record<GiftProductType, number>;
+  photoshoot: Record<OccasionType, number>;
 }

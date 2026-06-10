@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { StatusBadge } from './StatusBadge';
 import { Button } from '../ui/Button';
 import { updateOrderStatus, formatTimestamp } from '../../lib/firestore';
+import { formatPrice } from '../../lib/pricing';
 import type { Order, OrderStatus } from '../../types';
 
 const TYPE_LABELS: Record<string, string> = {
@@ -95,6 +96,12 @@ export function OrderRow({ order }: { order: Order }) {
             {TYPE_LABELS[order.orderType]}
           </span>
         </td>
+        <td className="px-4 py-3 text-sm font-medium text-[#111827]">
+          {order.estimatedPrice != null ? formatPrice(order.estimatedPrice) : '—'}
+          {order.orderType === 'photoshoot' && order.estimatedPrice != null && (
+            <span className="block text-xs font-normal text-[#9CA3AF]">starting from</span>
+          )}
+        </td>
         <td className="px-4 py-3"><StatusBadge status={order.status} /></td>
         <td className="px-4 py-3">
           <div className="flex items-center gap-2">
@@ -114,7 +121,7 @@ export function OrderRow({ order }: { order: Order }) {
       </tr>
       {expanded && (
         <tr className="bg-[#F8FAF9] border-b border-gray-100">
-          <td colSpan={6} className="px-6 py-4">
+          <td colSpan={7} className="px-6 py-4">
             {renderDetails()}
           </td>
         </tr>

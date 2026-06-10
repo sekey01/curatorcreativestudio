@@ -14,6 +14,7 @@ import { AdminLogin } from './pages/admin/Login';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { AdminOrders } from './pages/admin/Orders';
 import { AdminGalleryManager } from './pages/admin/GalleryManager';
+import { AdminPricing } from './pages/admin/Pricing';
 import { isConfigured } from './lib/firebase';
 
 // ── Error boundary ─────────────────────────────────────────────────────────
@@ -118,6 +119,7 @@ function AppRoutes() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route path="/admin/gallery" element={<AdminGalleryManager />} />
+        <Route path="/admin/pricing" element={<AdminPricing />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

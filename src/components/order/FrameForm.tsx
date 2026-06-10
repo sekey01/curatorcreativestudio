@@ -5,44 +5,24 @@ import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
+import { PriceEstimate } from './PriceEstimate';
 import { addOrder } from '../../lib/firestore';
+import { usePricing } from '../../hooks/usePricing';
+import { calculateFramePrice } from '../../lib/pricing';
+import { FRAME_TYPES as FRAME_TYPE_VALUES, FRAME_SIZES, EDGE_TYPES as EDGE_TYPE_VALUES, LAMINATION_TYPES as LAMINATION_TYPE_VALUES } from '../../lib/constants';
 import type { FrameType, FrameSize, EdgeType, LaminationType } from '../../types';
 
-const FRAME_TYPES: { value: FrameType; label: string }[] = [
-  { value: 'Foreign Frame', label: 'Foreign Frame' },
-  { value: 'Local Frame', label: 'Local Frame' },
-  { value: 'Wooden Frame', label: 'Wooden Frame' },
-  { value: 'Canvas Art', label: 'Canvas Art' },
-  { value: 'Pencil Art', label: 'Pencil Art' },
-  { value: 'Customized Clock', label: 'Customized Clock' },
-  { value: 'Citation', label: 'Citation' },
-  { value: 'Certificate', label: 'Certificate' },
-];
-const SIZES: { value: FrameSize; label: string }[] = [
-  { value: '8×10', label: '8×10' },
-  { value: '10×12', label: '10×12' },
-  { value: '12×16', label: '12×16' },
-  { value: '16×20', label: '16×20' },
-  { value: '20×24', label: '20×24' },
-  { value: '24×30', label: '24×30' },
-];
-const EDGE_TYPES: { value: EdgeType; label: string }[] = [
-  { value: 'No Edge', label: 'No Edge' },
-  { value: 'With Edge', label: 'With Edge' },
-];
-const LAMINATION_TYPES: { value: LaminationType; label: string }[] = [
-  { value: 'Crystal', label: 'Crystal' },
-  { value: 'Glossy', label: 'Glossy' },
-  { value: '3D', label: '3D' },
-  { value: 'Canvas', label: 'Canvas' },
-  { value: 'None', label: 'None' },
-];
+const FRAME_TYPES: { value: FrameType; label: string }[] = FRAME_TYPE_VALUES.map((v) => ({ value: v, label: v }));
+const SIZES: { value: FrameSize; label: string }[] = FRAME_SIZES.map((v) => ({ value: v, label: v }));
+const EDGE_TYPES: { value: EdgeType; label: string }[] = EDGE_TYPE_VALUES.map((v) => ({ value: v, label: v }));
+const LAMINATION_TYPES: { value: LaminationType; label: string }[] = LAMINATION_TYPE_VALUES.map((v) => ({ value: v, label: v }));
 
 interface FrameFormProps {
   onSuccess: () => void;
 }
 
 export function FrameForm({ onSuccess }: FrameFormProps) {
+  const { pricing } = usePricing();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [expressDelivery, setExpressDelivery] = useState(false);
@@ -56,6 +36,27 @@ export function FrameForm({ onSuccess }: FrameFormProps) {
     quantity: 1,
     additionalNotes: '',
   });
+
+  const { unitPrice, total } = calculateFramePrice(pricing, {
+    frameType: form.frameType,
+    size: form.size,
+    edgeType: form.edgeType,
+    lamination: form.lamination,
+    quantity: form.quantity,
+    expressDelivery,
+  });
+  const basePrice = form.frameType && form.size ? pricing.frames[form.frameType]?.[form.size] ?? 0 : 0;
+  const edgeFee = form.edgeType ? pricing.frameAddons.edgeTypes[form.edgeType] ?? 0 : 0;
+  const laminationFee = form.lamination ? pricing.frameAddons.lamination[form.lamination] ?? 0 : 0;
+  const expressFee = expressDelivery ? pricing.frameAddons.expressDeliveryFee : 0;
+  const showEstimate = Boolean(form.frameType && form.size);
+  const priceLines = [
+    { label: `Frame price (${form.size || ''})`, amount: basePrice },
+    ...(edgeFee > 0 ? [{ label: form.edgeType, amount: edgeFee }] : []),
+    ...(laminationFee > 0 ? [{ label: `${form.lamination} lamination`, amount: laminationFee }] : []),
+    ...(form.quantity > 1 ? [{ label: `Unit price × ${form.quantity}`, amount: unitPrice * form.quantity }] : []),
+    ...(expressFee > 0 ? [{ label: 'Express delivery', amount: expressFee }] : []),
+  ];
 
   function set(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -80,7 +81,7 @@ export function FrameForm({ onSuccess }: FrameFormProps) {
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
     try {
-      await addOrder({ ...form, expressDelivery, orderType: 'frame' } as Parameters<typeof addOrder>[0]);
+      await addOrder({ ...form, expressDelivery, estimatedPrice: total, orderType: 'frame' } as Parameters<typeof addOrder>[0]);
       onSuccess();
     } catch {
       toast.error('Failed to submit order. Please try again.');
@@ -128,6 +129,13 @@ export function FrameForm({ onSuccess }: FrameFormProps) {
         </div>
       </div>
       <Textarea label="Additional Notes" placeholder="Any special instructions..." value={form.additionalNotes} onChange={(e) => set('additionalNotes', e.target.value)} />
+      {showEstimate && (
+        <PriceEstimate
+          lines={priceLines}
+          total={total}
+          note="Final price may vary slightly based on design complexity."
+        />
+      )}
       <Button type="submit" loading={loading} size="lg" className="w-full sm:w-auto">
         Submit Frame Order
       </Button>

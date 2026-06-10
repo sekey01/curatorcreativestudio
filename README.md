@@ -79,6 +79,10 @@ service cloud.firestore {
       allow create: if true;
       allow read, update: if request.auth != null;
     }
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
   }
 }
 ```
@@ -141,11 +145,14 @@ src/
 │   ├── useAuth.ts
 │   ├── useComments.ts
 │   ├── useOrders.ts
-│   └── usePortfolio.ts
+│   ├── usePortfolio.ts
+│   └── usePricing.ts
 ├── lib/
 │   ├── firebase.ts
 │   ├── firestore.ts
-│   └── storage.ts
+│   ├── storage.ts
+│   ├── constants.ts
+│   └── pricing.ts
 ├── pages/
 │   ├── Home.tsx
 │   ├── Gallery.tsx
@@ -155,7 +162,8 @@ src/
 │       ├── Login.tsx
 │       ├── Dashboard.tsx
 │       ├── Orders.tsx
-│       └── GalleryManager.tsx
+│       ├── GalleryManager.tsx
+│       └── Pricing.tsx
 ├── types/
 │   └── index.ts
 ├── App.tsx
@@ -194,7 +202,28 @@ src/
   "phone": "+233551234567",
   "orderType": "photoshoot",
   "status": "pending",
+  "estimatedPrice": 350,
   "createdAt": "<Timestamp>"
+}
+```
+
+### `settings/pricing`
+Single document holding all admin-configurable prices, edited from `/admin/pricing`. Public read access lets the
+Order page show live price estimates; only authenticated admins can write.
+```json
+{
+  "frames": { "Foreign Frame": { "8×10": 80, "10×12": 100, "...": 0 }, "...": {} },
+  "frameAddons": {
+    "edgeTypes": { "No Edge": 0, "With Edge": 10 },
+    "lamination": { "Crystal": 15, "Glossy": 10, "3D": 25, "Canvas": 20, "None": 0 },
+    "expressDeliveryFee": 30
+  },
+  "shirts": {
+    "items": { "Plain T-Shirt": 25, "Lacoste": 60, "...": 0 },
+    "printMethods": { "Embroidery": 15, "DTF (Direct to Fabric)": 10, "...": 0 }
+  },
+  "gifts": { "Magic Mug": 35, "Plain Mug": 20, "...": 0 },
+  "photoshoot": { "Birthday": 300, "Wedding": 1500, "...": 0 }
 }
 ```
 

@@ -21,7 +21,7 @@ export function ImageCardSkeleton() {
 export function OrderRowSkeleton() {
   return (
     <tr className="border-b border-[#0D2040]">
-      {[1, 2, 3, 4, 5].map((i) => (
+      {[1, 2, 3, 4, 5, 6, 7].map((i) => (
         <td key={i} className="px-4 py-3">
           <Skeleton className="h-4 w-full"/>
         </td>

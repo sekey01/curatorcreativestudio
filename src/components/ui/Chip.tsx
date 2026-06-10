@@ -1,11 +1,12 @@
 
 interface ChipProps {
   label: string;
+  hint?: string;
   selected: boolean;
   onClick: () => void;
 }
 
-export function Chip({ label, selected, onClick }: ChipProps) {
+export function Chip({ label, hint, selected, onClick }: ChipProps) {
   return (
     <button
       type="button"
@@ -17,6 +18,7 @@ export function Chip({ label, selected, onClick }: ChipProps) {
       }`}
     >
       {label}
+      {hint && <span className={`ml-1.5 ${selected ? 'text-white/80' : 'text-[#9CA3AF]'}`}>{hint}</span>}
     </button>
   );
 }
@@ -27,9 +29,10 @@ interface ChipGroupProps {
   onChange: (selected: string[]) => void;
   label?: string;
   error?: string;
+  hints?: Record<string, string>;
 }
 
-export function ChipGroup({ options, selected, onChange, label, error }: ChipGroupProps) {
+export function ChipGroup({ options, selected, onChange, label, error, hints }: ChipGroupProps) {
   function toggle(opt: string) {
     onChange(
       selected.includes(opt) ? selected.filter((s) => s !== opt) : [...selected, opt],
@@ -41,7 +44,7 @@ export function ChipGroup({ options, selected, onChange, label, error }: ChipGro
       {label && <span className="text-sm font-medium text-[#374151]">{label}</span>}
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => (
-          <Chip key={opt} label={opt} selected={selected.includes(opt)} onClick={() => toggle(opt)} />
+          <Chip key={opt} label={opt} hint={hints?.[opt]} selected={selected.includes(opt)} onClick={() => toggle(opt)} />
         ))}
       </div>
       {error && <p className="text-xs text-red-500">{error}</p>}

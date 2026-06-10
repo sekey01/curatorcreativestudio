@@ -4,27 +4,19 @@ import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
 import { ChipGroup } from '../ui/Chip';
+import { PriceEstimate } from './PriceEstimate';
 import { addOrder } from '../../lib/firestore';
+import { usePricing } from '../../hooks/usePricing';
+import { calculateGiftPrice, formatPrice } from '../../lib/pricing';
+import { GIFT_PRODUCT_TYPES as PRODUCT_TYPES } from '../../lib/constants';
 import type { GiftProductType } from '../../types';
-
-const PRODUCT_TYPES: GiftProductType[] = [
-  'Magic Mug',
-  'Plain Mug',
-  'Key Holder',
-  'Name Tag',
-  'Plaque/Award',
-  '3D Signage',
-  'Custom Hand Fan',
-  'Custom Pillow',
-  'UV Diary',
-  'UV Water Bottle',
-];
 
 interface GiftFormProps {
   onSuccess: () => void;
 }
 
 export function GiftForm({ onSuccess }: GiftFormProps) {
+  const { pricing } = usePricing();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [productTypes, setProductTypes] = useState<string[]>([]);
@@ -36,6 +28,17 @@ export function GiftForm({ onSuccess }: GiftFormProps) {
     customizationDetails: '',
     additionalNotes: '',
   });
+
+  const productHints = Object.fromEntries(
+    PRODUCT_TYPES.map((t) => [t, formatPrice(pricing.gifts[t] ?? 0)]),
+  );
+
+  const { unitPrice, total } = calculateGiftPrice(pricing, { productTypes, quantity: form.quantity });
+  const showEstimate = productTypes.length > 0;
+  const priceLines = [
+    ...productTypes.map((t) => ({ label: t, amount: pricing.gifts[t as GiftProductType] ?? 0 })),
+    ...(form.quantity > 1 ? [{ label: `Unit price × ${form.quantity}`, amount: unitPrice * form.quantity }] : []),
+  ];
 
   function set(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -61,6 +64,7 @@ export function GiftForm({ onSuccess }: GiftFormProps) {
       await addOrder({
         ...form,
         productTypes: productTypes as GiftProductType[],
+        estimatedPrice: total,
         orderType: 'gift',
       } as Parameters<typeof addOrder>[0]);
       onSuccess();
@@ -80,6 +84,7 @@ export function GiftForm({ onSuccess }: GiftFormProps) {
       <ChipGroup
         label="Product Type *"
         options={PRODUCT_TYPES}
+        hints={productHints}
         selected={productTypes}
         onChange={(v) => { setProductTypes(v); setErrors((p) => ({ ...p, productTypes: '' })); }}
         error={errors.productTypes}
@@ -90,6 +95,13 @@ export function GiftForm({ onSuccess }: GiftFormProps) {
       </div>
       <Textarea label="Customization Details *" placeholder="Names, text, colors, photo descriptions, special instructions..." value={form.customizationDetails} onChange={(e) => set('customizationDetails', e.target.value)} rows={5} error={errors.customizationDetails} />
       <Textarea label="Additional Notes" placeholder="Any other requirements..." value={form.additionalNotes} onChange={(e) => set('additionalNotes', e.target.value)} />
+      {showEstimate && (
+        <PriceEstimate
+          lines={priceLines}
+          total={total}
+          note="Final price may vary slightly based on customization complexity."
+        />
+      )}
       <Button type="submit" loading={loading} size="lg" className="w-full sm:w-auto">
         Submit Gift Order
       </Button>

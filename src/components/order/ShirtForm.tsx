@@ -4,17 +4,19 @@ import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
 import { ChipGroup } from '../ui/Chip';
+import { PriceEstimate } from './PriceEstimate';
 import { addOrder } from '../../lib/firestore';
+import { usePricing } from '../../hooks/usePricing';
+import { calculateShirtPrice, formatPrice } from '../../lib/pricing';
+import { PRINT_METHODS, SHIRT_ITEM_TYPES as ITEM_TYPES } from '../../lib/constants';
 import type { PrintMethod, ShirtItemType } from '../../types';
-
-const PRINT_METHODS: PrintMethod[] = ['Embroidery', 'DTF (Direct to Fabric)', 'Sublimation', 'Screen Printing'];
-const ITEM_TYPES: ShirtItemType[] = ['Plain T-Shirt', 'Lacoste', 'Jersey', 'Lab Coat', 'Apron', 'Tote Bag'];
 
 interface ShirtFormProps {
   onSuccess: () => void;
 }
 
 export function ShirtForm({ onSuccess }: ShirtFormProps) {
+  const { pricing } = usePricing();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [printMethods, setPrintMethods] = useState<string[]>([]);
@@ -27,6 +29,21 @@ export function ShirtForm({ onSuccess }: ShirtFormProps) {
     designDescription: '',
     additionalNotes: '',
   });
+
+  const itemHints = Object.fromEntries(
+    ITEM_TYPES.map((t) => [t, formatPrice(pricing.shirts.items[t] ?? 0)]),
+  );
+  const printMethodHints = Object.fromEntries(
+    PRINT_METHODS.map((m) => [m, `+${formatPrice(pricing.shirts.printMethods[m] ?? 0)}`]),
+  );
+
+  const { unitPrice, total } = calculateShirtPrice(pricing, { itemTypes, printMethods, quantity: form.quantity });
+  const showEstimate = itemTypes.length > 0 || printMethods.length > 0;
+  const priceLines = [
+    ...itemTypes.map((t) => ({ label: t, amount: pricing.shirts.items[t as ShirtItemType] ?? 0 })),
+    ...printMethods.map((m) => ({ label: m, amount: pricing.shirts.printMethods[m as PrintMethod] ?? 0 })),
+    ...(form.quantity > 1 ? [{ label: `Unit price × ${form.quantity}`, amount: unitPrice * form.quantity }] : []),
+  ];
 
   function set(field: string, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -54,6 +71,7 @@ export function ShirtForm({ onSuccess }: ShirtFormProps) {
         ...form,
         printMethods: printMethods as PrintMethod[],
         itemTypes: itemTypes as ShirtItemType[],
+        estimatedPrice: total,
         orderType: 'shirt',
       } as Parameters<typeof addOrder>[0]);
       onSuccess();
@@ -73,6 +91,7 @@ export function ShirtForm({ onSuccess }: ShirtFormProps) {
       <ChipGroup
         label="Print Method *"
         options={PRINT_METHODS}
+        hints={printMethodHints}
         selected={printMethods}
         onChange={(v) => { setPrintMethods(v); setErrors((p) => ({ ...p, printMethods: '' })); }}
         error={errors.printMethods}
@@ -80,6 +99,7 @@ export function ShirtForm({ onSuccess }: ShirtFormProps) {
       <ChipGroup
         label="Item Type *"
         options={ITEM_TYPES}
+        hints={itemHints}
         selected={itemTypes}
         onChange={(v) => { setItemTypes(v); setErrors((p) => ({ ...p, itemTypes: '' })); }}
         error={errors.itemTypes}
@@ -90,6 +110,13 @@ export function ShirtForm({ onSuccess }: ShirtFormProps) {
       </div>
       <Textarea label="Design Description *" placeholder="Describe your design, colors, text, placement..." value={form.designDescription} onChange={(e) => set('designDescription', e.target.value)} error={errors.designDescription} />
       <Textarea label="Additional Notes" placeholder="Any other requirements..." value={form.additionalNotes} onChange={(e) => set('additionalNotes', e.target.value)} />
+      {showEstimate && (
+        <PriceEstimate
+          lines={priceLines}
+          total={total}
+          note="Final price may vary slightly based on design complexity."
+        />
+      )}
       <Button type="submit" loading={loading} size="lg" className="w-full sm:w-auto">
         Submit Shirt Order
       </Button>

@@ -4,22 +4,20 @@ import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
 import { Button } from '../ui/Button';
+import { PriceEstimate } from './PriceEstimate';
 import { addOrder } from '../../lib/firestore';
+import { usePricing } from '../../hooks/usePricing';
+import { getPhotoshootStartingPrice } from '../../lib/pricing';
+import { OCCASION_TYPES } from '../../lib/constants';
 
-const OCCASION_OPTIONS = [
-  { value: 'Birthday', label: 'Birthday' },
-  { value: 'Wedding', label: 'Wedding' },
-  { value: 'Party', label: 'Party' },
-  { value: 'Funeral', label: 'Funeral' },
-  { value: 'Ceremony', label: 'Ceremony' },
-  { value: 'Other', label: 'Other' },
-];
+const OCCASION_OPTIONS = OCCASION_TYPES.map((v) => ({ value: v, label: v }));
 
 interface PhotoshootFormProps {
   onSuccess: () => void;
 }
 
 export function PhotoshootForm({ onSuccess }: PhotoshootFormProps) {
+  const { pricing } = usePricing();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [form, setForm] = useState({
@@ -30,6 +28,9 @@ export function PhotoshootForm({ onSuccess }: PhotoshootFormProps) {
     eventLocation: '',
     additionalNotes: '',
   });
+
+  const startingPrice = form.occasionType ? getPhotoshootStartingPrice(pricing, form.occasionType) : 0;
+  const showEstimate = Boolean(form.occasionType);
 
   function set(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -52,7 +53,7 @@ export function PhotoshootForm({ onSuccess }: PhotoshootFormProps) {
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
     try {
-      await addOrder({ ...form, orderType: 'photoshoot' } as Parameters<typeof addOrder>[0]);
+      await addOrder({ ...form, estimatedPrice: startingPrice, orderType: 'photoshoot' } as Parameters<typeof addOrder>[0]);
       onSuccess();
     } catch {
       toast.error('Failed to submit order. Please try again.');
@@ -110,6 +111,13 @@ export function PhotoshootForm({ onSuccess }: PhotoshootFormProps) {
         value={form.additionalNotes}
         onChange={(e) => set('additionalNotes', e.target.value)}
       />
+      {showEstimate && (
+        <PriceEstimate
+          total={startingPrice}
+          totalLabel="Starting From"
+          note="Final price depends on package, duration, and location."
+        />
+      )}
       <Button type="submit" loading={loading} size="lg" className="w-full sm:w-auto">
         Submit Booking Request
       </Button>
