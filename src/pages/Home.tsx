@@ -433,8 +433,8 @@ export function Home() {
             </div>
 
             {/* Right: camera-person animation */}
-            <div className="hidden lg:flex items-center justify-center animate-slide-right">
-              <div className="relative w-full max-w-120 aspect-480/490">
+            <div className="flex items-center justify-center animate-slide-right">
+              <div className="relative w-full max-w-80 sm:max-w-96 lg:max-w-120 aspect-480/490">
                 <HeroScene />
               </div>
             </div>

@@ -15,7 +15,28 @@
       "Bash(sed -i '' -e 's/text-\\\\[#00D4FF\\\\] text-sm\" style={{ textShadow: .0 0 6px rgba\\(0,212,255,0\\\\.5\\). }}/text-white text-sm\" style={{ textShadow: \"0 0 5px rgba\\(255,255,255,0.4\\)\" }}/g' Home.tsx)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5175/)",
       "Bash(pkill -f \"vite --port 5175\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(xargs -I{} sh -c 'echo \"=== {} ===\"; cat {}')",
+      "Bash(curl -s http://localhost:4173/)",
+      "Bash(jobs -p)",
+      "Bash(mount)",
+      "Bash(chromium-cli --help)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(node -e \"require\\('playwright'\\)\")",
+      "Bash(npm ls *)",
+      "Bash(node -e \"const {chromium} = require\\('playwright'\\); console.log\\('ok', chromium.executablePath\\(\\)\\)\")",
+      "Bash(npm view *)",
+      "Bash(npx -y playwright@1.60.0 install chromium --with-deps)",
+      "Bash(mkdir -p /tmp/pw-check)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Read(//Users/asante/Library/Caches/ms-playwright/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4173/)",
+      "Bash(node check.js)"
+    ],
+    "additionalDirectories": [
+      "/tmp/pw-check",
+      "/private/tmp/pw-check"
     ]
   }
 }
