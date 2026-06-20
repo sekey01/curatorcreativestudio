@@ -112,15 +112,15 @@ export function FrameForm({ onSuccess }: FrameFormProps) {
             type="button"
             onClick={() => setExpressDelivery(!expressDelivery)}
             className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer text-left ${
-              expressDelivery ? 'border-[#1D9E75] bg-[#E8F5F0]' : 'border-gray-200 bg-white hover:border-gray-300'
+              expressDelivery ? 'border-[#F97316] bg-[#FFEDD5]' : 'border-gray-200 bg-white hover:border-gray-300'
             }`}
           >
-            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${expressDelivery ? 'border-[#1D9E75] bg-[#1D9E75]' : 'border-gray-300'}`}>
+            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${expressDelivery ? 'border-[#F97316] bg-[#F97316]' : 'border-gray-300'}`}>
               {expressDelivery && <div className="w-2 h-2 bg-white rounded-full" />}
             </div>
             <div>
               <div className="flex items-center gap-1.5 text-sm font-medium text-[#111827]">
-                <Zap size={14} className={expressDelivery ? 'text-[#1D9E75]' : 'text-gray-400'} />
+                <Zap size={14} className={expressDelivery ? 'text-[#F97316]' : 'text-gray-400'} />
                 Express Delivery
               </div>
               <span className="text-xs text-[#6B7280]">{expressDelivery ? 'Same day (+fee)' : 'Standard: 2–3 days'}</span>

@@ -13,8 +13,8 @@ export function Chip({ label, hint, selected, onClick }: ChipProps) {
       onClick={onClick}
       className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border cursor-pointer ${
         selected
-          ? 'bg-[#1D9E75] border-[#1D9E75] text-white'
-          : 'bg-white border-gray-200 text-[#6B7280] hover:border-[#1D9E75] hover:text-[#1D9E75]'
+          ? 'bg-[#7C3AED] border-[#7C3AED] text-white'
+          : 'bg-white border-gray-200 text-[#6B7280] hover:border-[#7C3AED] hover:text-[#7C3AED]'
       }`}
     >
       {label}

@@ -22,7 +22,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#F8FAF9]">
+    <div className="min-h-screen flex bg-[#F9FAFB]">
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 ${
@@ -30,12 +30,12 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         } lg:translate-x-0`}
       >
         <div className="h-16 flex items-center gap-2.5 px-6 border-b border-gray-100">
-          <div className="w-8 h-8 bg-[#1D9E75] rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-[#7C3AED] rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">C</span>
           </div>
           <div className="leading-tight">
             <span className="text-[#111827] font-semibold text-sm block">Curator</span>
-            <span className="text-[#1D9E75] text-xs">Admin Panel</span>
+            <span className="text-[#7C3AED] text-xs">Admin Panel</span>
           </div>
         </div>
 
@@ -48,8 +48,8 @@ export function AdminLayout({ children }: { children: ReactNode }) {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#E8F5F0] text-[#1D9E75]'
-                    : 'text-[#374151] hover:bg-gray-50 hover:text-[#1D9E75]'
+                    ? 'bg-[#F3E8FF] text-[#7C3AED]'
+                    : 'text-[#374151] hover:bg-gray-50 hover:text-[#7C3AED]'
                 }`
               }
             >
@@ -89,8 +89,8 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           </button>
           <div className="ml-auto flex items-center gap-2">
             <span className="text-sm text-[#6B7280]">Admin</span>
-            <div className="w-8 h-8 bg-[#E8F5F0] rounded-full flex items-center justify-center">
-              <span className="text-[#1D9E75] text-xs font-bold">A</span>
+            <div className="w-8 h-8 bg-[#F3E8FF] rounded-full flex items-center justify-center">
+              <span className="text-[#7C3AED] text-xs font-bold">A</span>
             </div>
           </div>
         </header>

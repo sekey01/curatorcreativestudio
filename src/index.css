@@ -29,10 +29,15 @@
   --border-hover:   rgba(0,0,0,0.45);
   --border-section: #E8E8E8;
 
-  /* Accent (black in light, white in dark) */
-  --accent:        #111111;
-  --accent-subtle: rgba(0,0,0,0.06);
-  --accent-medium: rgba(0,0,0,0.12);
+  /* Accent (purple primary) */
+  --accent:        #7C3AED;
+  --accent-subtle: rgba(124,58,237,0.08);
+  --accent-medium: rgba(124,58,237,0.16);
+
+  /* Secondary accent (orange highlight) */
+  --accent-2:        #F97316;
+  --accent-2-subtle: rgba(249,115,22,0.08);
+  --accent-2-medium: rgba(249,115,22,0.16);
 
   /* Hero grid */
   --grid-line: rgba(0,0,0,0.04);
@@ -51,7 +56,7 @@
   --svg-cam-bg:       #F0F0F0;
   --svg-cam-bg-alt:   #E4E4E4;
   --svg-text:         rgba(0,0,0,0.60);
-  --svg-scan:         rgba(0,0,0,0.70);
+  --svg-scan:         rgba(124,58,237,0.75);
 
   /* Scrollbar */
   --sb-track: #F0F0F0;
@@ -78,9 +83,13 @@ html.dark {
   --border-hover:   rgba(255,255,255,0.42);
   --border-section: #1A1A1A;
 
-  --accent:        #FFFFFF;
-  --accent-subtle: rgba(255,255,255,0.06);
-  --accent-medium: rgba(255,255,255,0.12);
+  --accent:        #A78BFA;
+  --accent-subtle: rgba(167,139,250,0.10);
+  --accent-medium: rgba(167,139,250,0.20);
+
+  --accent-2:        #FB923C;
+  --accent-2-subtle: rgba(251,146,60,0.10);
+  --accent-2-medium: rgba(251,146,60,0.20);
 
   --grid-line: rgba(255,255,255,0.03);
 
@@ -97,7 +106,7 @@ html.dark {
   --svg-cam-bg:       #0D0D0D;
   --svg-cam-bg-alt:   #141414;
   --svg-text:         rgba(255,255,255,0.70);
-  --svg-scan:         rgba(255,255,255,0.75);
+  --svg-scan:         rgba(167,139,250,0.85);
 
   --sb-track: #080808;
   --sb-thumb: #444444;

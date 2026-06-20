@@ -37,14 +37,14 @@ export function CommentSection({ imageId }: CommentSectionProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <MessageSquare size={18} className="text-[#1D9E75]" />
+        <MessageSquare size={18} className="text-[#7C3AED]" />
         <h4 className="font-semibold text-[#111827]">
           Comments {!loading && `(${comments.length})`}
         </h4>
       </div>
 
       {/* Comment form */}
-      <form onSubmit={handleSubmit} className="space-y-3 p-4 bg-[#F8FAF9] rounded-xl border border-gray-100">
+      <form onSubmit={handleSubmit} className="space-y-3 p-4 bg-[#F9FAFB] rounded-xl border border-gray-100">
         <Input
           label="Your name"
           placeholder="Enter your name"

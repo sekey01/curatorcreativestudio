@@ -41,8 +41,8 @@ export function Order() {
     return (
       <div className="pt-24 pb-20 min-h-screen flex items-center">
         <div className="max-w-lg mx-auto px-4 sm:px-6 text-center">
-          <div className="w-20 h-20 bg-[#E8F5F0] rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={40} className="text-[#1D9E75]" />
+          <div className="w-20 h-20 bg-[#F3E8FF] rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={40} className="text-[#7C3AED]" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-3">Order Submitted!</h1>
           <p className="text-[#6B7280] leading-relaxed mb-8">
@@ -82,14 +82,14 @@ export function Order() {
         </div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 p-1.5 bg-[#F8FAF9] rounded-xl border border-gray-100">
+        <div className="flex flex-wrap gap-2 mb-8 p-1.5 bg-[#F9FAFB] rounded-xl border border-gray-100">
           {TABS.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-2 flex-1 min-w-[120px] px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
                 activeTab === id
-                  ? 'bg-white text-[#1D9E75] shadow-sm border border-gray-100'
+                  ? 'bg-white text-[#7C3AED] shadow-sm border border-gray-100'
                   : 'text-[#6B7280] hover:text-[#111827]'
               }`}
             >

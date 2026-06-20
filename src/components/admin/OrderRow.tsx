@@ -120,7 +120,7 @@ export function OrderRow({ order }: { order: Order }) {
         </td>
       </tr>
       {expanded && (
-        <tr className="bg-[#F8FAF9] border-b border-gray-100">
+        <tr className="bg-[#F9FAFB] border-b border-gray-100">
           <td colSpan={7} className="px-6 py-4">
             {renderDetails()}
           </td>

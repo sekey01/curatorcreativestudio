@@ -8,7 +8,7 @@ export function Skeleton({ className = '' }: SkeletonProps) {
 
 export function ImageCardSkeleton() {
   return (
-    <div className="rounded-xl overflow-hidden border border-[#0D2040] bg-[#040E1E]">
+    <div className="rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border)', background: 'var(--bg-card)' }}>
       <Skeleton className="w-full h-56"/>
       <div className="p-4 space-y-2">
         <Skeleton className="h-4 w-3/4"/>
@@ -20,7 +20,7 @@ export function ImageCardSkeleton() {
 
 export function OrderRowSkeleton() {
   return (
-    <tr className="border-b border-[#0D2040]">
+    <tr className="border-b border-gray-100">
       {[1, 2, 3, 4, 5, 6, 7].map((i) => (
         <td key={i} className="px-4 py-3">
           <Skeleton className="h-4 w-full"/>

@@ -61,7 +61,7 @@ function CurrencyInput({ value, onChange, ariaLabel }: { value: number; onChange
         value={value}
         onChange={(e) => onChange(e.target.valueAsNumber || 0)}
         className="w-full pl-6 pr-2 py-2 rounded-lg text-sm outline-none border border-gray-200 bg-white text-[#111827]
-          focus:border-[#1D9E75] focus:ring-2 focus:ring-[#1D9E75]/20 transition-all"
+          focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20 transition-all"
       />
     </div>
   );

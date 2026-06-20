@@ -51,7 +51,10 @@
       "Bash(cd /Users/asante/Game/curatorcreativestudio/.tmp/pwtest)",
       "Bash(node check2.js)",
       "Bash(pkill -f \"vite\")",
-      "Bash(rm -rf /Users/asante/Game/curatorcreativestudio/.tmp)"
+      "Bash(rm -rf /Users/asante/Game/curatorcreativestudio/.tmp)",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "/tmp/pw-check",

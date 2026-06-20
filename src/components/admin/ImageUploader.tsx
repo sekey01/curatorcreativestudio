@@ -104,7 +104,7 @@ export function ImageUploader({ onUploaded }: { onUploaded: () => void }) {
         onDrop={handleDrop}
         onClick={() => !file && inputRef.current?.click()}
         className={`relative rounded-xl border-2 border-dashed transition-all cursor-pointer ${
-          isDragging ? 'border-[#1D9E75] bg-[#E8F5F0]' : 'border-gray-200 hover:border-[#1D9E75] hover:bg-[#F8FAF9]'
+          isDragging ? 'border-[#7C3AED] bg-[#F3E8FF]' : 'border-gray-200 hover:border-[#7C3AED] hover:bg-[#F9FAFB]'
         } ${errors.file ? 'border-red-400' : ''}`}
       >
         <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFileInput} />
@@ -121,8 +121,8 @@ export function ImageUploader({ onUploaded }: { onUploaded: () => void }) {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-12 px-4">
-            <div className="w-12 h-12 bg-[#E8F5F0] rounded-xl flex items-center justify-center">
-              <Upload size={22} className="text-[#1D9E75]" />
+            <div className="w-12 h-12 bg-[#F3E8FF] rounded-xl flex items-center justify-center">
+              <Upload size={22} className="text-[#7C3AED]" />
             </div>
             <div className="text-center">
               <p className="text-sm font-medium text-[#111827]">Drag & drop an image</p>
@@ -141,7 +141,7 @@ export function ImageUploader({ onUploaded }: { onUploaded: () => void }) {
           </div>
           <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#1D9E75] rounded-full transition-all duration-300"
+              className="h-full bg-[#7C3AED] rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

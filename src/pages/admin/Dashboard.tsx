@@ -19,7 +19,7 @@ export function AdminDashboard() {
       value: orders.length,
       icon: ShoppingBag,
       loading: ordersLoading,
-      color: 'bg-blue-50 text-blue-600',
+      color: 'bg-purple-50 text-purple-600',
       link: '/admin/orders',
     },
     {
@@ -35,7 +35,7 @@ export function AdminDashboard() {
       value: images.length,
       icon: Images,
       loading: imagesLoading,
-      color: 'bg-[#E8F5F0] text-[#1D9E75]',
+      color: 'bg-orange-50 text-orange-600',
       link: '/admin/gallery',
     },
     {
@@ -68,7 +68,7 @@ export function AdminDashboard() {
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
                   <Icon size={20} />
                 </div>
-                <ArrowRight size={16} className="text-gray-300 group-hover:text-[#1D9E75] transition-colors" />
+                <ArrowRight size={16} className="text-gray-300 group-hover:text-[#7C3AED] transition-colors" />
               </div>
               {loading ? (
                 <Skeleton className="h-8 w-16 mb-1" />
@@ -84,26 +84,26 @@ export function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <Link
             to="/admin/orders"
-            className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:border-[#1D9E75]/40 hover:shadow-md transition-all duration-200 group"
+            className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:border-[#7C3AED]/40 hover:shadow-md transition-all duration-200 group"
           >
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold text-[#111827] mb-1">Manage Orders</h3>
                 <p className="text-sm text-[#6B7280]">View, filter, and update customer orders</p>
               </div>
-              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#1D9E75] transition-colors" />
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#7C3AED] transition-colors" />
             </div>
           </Link>
           <Link
             to="/admin/gallery"
-            className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:border-[#1D9E75]/40 hover:shadow-md transition-all duration-200 group"
+            className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:border-[#7C3AED]/40 hover:shadow-md transition-all duration-200 group"
           >
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold text-[#111827] mb-1">Gallery Manager</h3>
                 <p className="text-sm text-[#6B7280]">Upload, organize, and delete portfolio images</p>
               </div>
-              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#1D9E75] transition-colors" />
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#7C3AED] transition-colors" />
             </div>
           </Link>
         </div>
