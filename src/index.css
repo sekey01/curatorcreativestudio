@@ -198,6 +198,10 @@ html { scroll-behavior: smooth; }
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+@keyframes photoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
 
 /* ════════════════════════════════════════════════════════════════════════════
    UTILITY ANIMATION CLASSES
@@ -216,6 +220,10 @@ html { scroll-behavior: smooth; }
   animation: svgFloat 4s ease-in-out infinite;
   transform-origin: 120px 248px;
   transform-box: fill-box;
+}
+.animate-photo-float {
+  animation: photoFloat 5.5s ease-in-out infinite;
+  animation-delay: 0.4s;
 }
 .flash-rays-anim {
   animation: cameraFlash 10s ease-in-out infinite;

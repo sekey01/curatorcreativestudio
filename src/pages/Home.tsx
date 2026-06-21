@@ -8,6 +8,7 @@ import { ImageModal } from '../components/gallery/ImageModal';
 import { useRecentPortfolio } from '../hooks/usePortfolio';
 import { useRecentComments } from '../hooks/useComments';
 import { formatTimestamp } from '../lib/firestore';
+import curatorCeoPhoto from '../assets/curatorceo.jpeg';
 import type { PortfolioImage } from '../types';
 
 const SERVICES = [
@@ -432,10 +433,32 @@ export function Home() {
               </div>
             </div>
 
-            {/* Right: camera-person animation */}
+            {/* Right: camera-person animation + founder photo */}
             <div className="flex items-center justify-center animate-slide-right">
               <div className="relative w-full max-w-80 sm:max-w-96 lg:max-w-120 aspect-480/490">
                 <HeroScene />
+
+                {/* Floating founder photo card */}
+                <div className="absolute bottom-2 left-0 sm:-left-6 w-24 sm:w-28 lg:w-32 animate-photo-float">
+                  <div className="relative">
+                    <div className="absolute -inset-2 rounded-2xl blur-lg" aria-hidden="true"
+                      style={{ background: 'var(--accent-subtle)' }}/>
+                    <div className="relative rounded-2xl overflow-hidden border-2 aspect-3/4"
+                      style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-hover)' }}>
+                      <img
+                        src={curatorCeoPhoto}
+                        alt="Founder of Curator Creative Studio"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <span className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full
+                      text-[9px] font-semibold tracking-widest uppercase whitespace-nowrap"
+                      style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-2)' }}>
+                      Founder
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
